@@ -1,0 +1,7 @@
+flask==3.0.3
+flask-cors==4.0.1
+pillow==10.4.0
+numpy==1.26.4
+torch==2.3.1           # if using PyTorch (remove if using TF)
+torchvision==0.18.1    # if using PyTorch (remove if using TF)
+# tensorflow==2.16.1   # use this instead of torch if your model is TF

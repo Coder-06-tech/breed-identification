@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bharat Pashudhan AI Breed Identifier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<header>
+  <div><strong>🐮 Bharat Pashudhan</strong> - AI Breed Identifier</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Identify Breed</a>
+    <a href="#">Library</a>
+    <a href="#">Training</a>
+    <a href="#">Feedback</a>
+  </nav>
+</header>
+<div class="container">
+  <h1>Breed Identification</h1>
+  <div class="upload-box">
+    <label for="photo">Upload or capture animal photo:</label>
+    <input type="file" accept="image/*" capture="environment" id="photo">
+    <small>For best results, use a clear side-view photo. <a href="#">See samples</a>.</small>
+    <br>
+    <img id="animal-preview" style="display:none;" src="https://img3.exportersindia.com/product_images/bc-full/2019/6/4565368/sahiwal-cow-1560941861-4960613.jpeg" alt="Uploaded animal photo preview">
+  </div>
+  <div class="breed-result" id="breedResult">
+      <h2>AI Suggestion</h2>
+      <p><strong>Detected Breed:</strong> <span id="ai-breed">—</span>
+        (<span id="ai-confidence">—</span>%)</p>
+      <img id="ai-image" src="" alt="Detected Breed" width="140">
+      <p class="small" id="ai-breed-desc">Upload a photo to get AI prediction.</p>
+      <label for="breed-confirm">Is this correct? Select breed:</label>
+      <select id="breed-confirm"></select>
+  </div>
+  <form>
+    <h2>Animal Details</h2>
+    <label for="animal-age">Age (years)</label>
+    <input id="animal-age" type="number" min="0" max="30">
+    <label for="animal-health">Health Status</label>
+    <select id="animal-health">
+      <option>Healthy</option>
+      <option>Under Treatment</option>
+      <option>Vaccinated</option>
+    </select>
+    <label for="location">Location</label>
+    <input id="location" placeholder="Village/District/State">
+    <button type="submit">Register / Save</button>
+  </form>
+  <hr>
+  <h2>Breed Library</h2>
+  <div class="library-card">
+    <strong>Gir</strong> <br>
+    Origin: Gujarat. Famous for milk, distinctive forehead.
+  </div>
+  <div class="library-card">
+    <strong>Murrah Buffalo</strong><br>
+    Origin: Haryana. Jet-black, top buffalo for milk.
+  </div>
+  <a href="#">View all breeds</a>
+  <hr>
+  <h2>Need Help?</h2>
+  <a href="#">How to take best photo</a> |
+  <a href="#">FAQ</a>
+</div>
+<footer>
+  &copy; 2025 Bharat Pashudhan | info@bpa.gov.in | Powered by GovTech
+</footer>
+<script src="index.js"></script>
+</body>
+</html>

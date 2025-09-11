@@ -1,0 +1,15 @@
+body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4;}
+    header, footer { background: #046591; color: #fff; padding: 1em 2em; }
+    header { display: flex; justify-content: space-between; align-items: center; }
+    nav a { color: #fff; margin: 0 1em; text-decoration: none; font-weight: bold; }
+    .container { max-width: 680px; margin: 2em auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #ccc; padding: 2em;}
+    h1, h2 { color: #046591; }
+    .upload-box { border: 2px dashed #69b93b; padding: 1.5em; border-radius: 8px; text-align: center; margin-bottom: 1.5em; background: #f6ffed;}
+    .breed-result { background: #e9f1fa; padding: 1em; border-radius: 6px; margin-bottom: 1.5em; display:none;}
+    label, select, input, button { margin-bottom: 1em; width: 100%; }
+    img#animal-preview {max-width:140px; border-radius:8px; margin-bottom:10px;}
+    button { background: #69b93b; color: #fff; border: none; padding: 0.8em; font-size: 1em; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #046591;}
+    .library-card { background: #f6ffed; padding: 0.8em; border-radius: 5px; margin-bottom: 0.5em; }
+    @media (max-width: 700px) {.container { padding: 1em; }}
+    .small { font-size: 90%; color: #666;}
