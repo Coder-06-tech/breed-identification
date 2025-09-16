@@ -1,15 +1,149 @@
-body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4;}
-    header, footer { background: #046591; color: #fff; padding: 1em 2em; }
-    header { display: flex; justify-content: space-between; align-items: center; }
-    nav a { color: #fff; margin: 0 1em; text-decoration: none; font-weight: bold; }
-    .container { max-width: 680px; margin: 2em auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #ccc; padding: 2em;}
-    h1, h2 { color: #046591; }
-    .upload-box { border: 2px dashed #69b93b; padding: 1.5em; border-radius: 8px; text-align: center; margin-bottom: 1.5em; background: #f6ffed;}
-    .breed-result { background: #e9f1fa; padding: 1em; border-radius: 6px; margin-bottom: 1.5em; display:none;}
-    label, select, input, button { margin-bottom: 1em; width: 100%; }
-    img#animal-preview {max-width:140px; border-radius:8px; margin-bottom:10px;}
-    button { background: #69b93b; color: #fff; border: none; padding: 0.8em; font-size: 1em; border-radius: 6px; cursor: pointer; }
-    button:hover { background: #046591;}
-    .library-card { background: #f6ffed; padding: 0.8em; border-radius: 5px; margin-bottom: 0.5em; }
-    @media (max-width: 700px) {.container { padding: 1em; }}
-    .small { font-size: 90%; color: #666;}
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body {
+  background: #f9fafa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  background: #004d40;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+header div {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+nav a {
+  color: #fff;
+  margin-left: 1.5rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffd54f;
+}
+
+/* Form Container */
+form {
+  max-width: 800px;
+  background: #fff;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h2 {
+  color: #004d40;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  background: #00796b;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #004d40;
+}
+
+/* Breed Identification Section */
+.container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 2px dashed #a5d6a7;
+  border-radius: 8px;
+  background: #f1f8e9;
+}
+
+.container h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #33691e;
+}
+
+.upload-box {
+  margin-bottom: 1.5rem;
+}
+
+.upload-box input[type="file"] {
+  margin-top: 0.5rem;
+}
+
+small {
+  display: block;
+  margin-top: 0.5rem;
+  color: #666;
+}
+
+.breed-result {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.breed-result h2 {
+  margin-bottom: 1rem;
+  color: #004d40;
+}
+
+.breed-result img {
+  display: block;
+  margin-top: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 3rem;
+  background: #004d40;
+  color: #fff;
+  font-size: 0.9rem;
+}

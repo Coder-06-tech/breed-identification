@@ -11,55 +11,51 @@
   <div><strong>🐮 Bharat Pashudhan</strong> - AI Breed Identifier</div>
   <nav>
     <a href="#">Home</a>
-    <a href="#">Identify Breed</a>
     <a href="#">Library</a>
-    <a href="#">Training</a>
-    <a href="#">Feedback</a>
+    <a href="#">Management</a>
+    <a href="#">Health</a>
+    <a href="#">Breeding</a>
+    <a href="#">Support</a>
   </nav>
 </header>
-<div class="container">
-  <h1>Breed Identification</h1>
-  <div class="upload-box">
-    <label for="photo">Upload or capture animal photo:</label>
-    <input type="file" accept="image/*" capture="environment" id="photo">
-    <small>For best results, use a clear side-view photo. <a href="#">See samples</a>.</small>
-    <br>
-    <img id="animal-preview" style="display:none;" src="https://img3.exportersindia.com/product_images/bc-full/2019/6/4565368/sahiwal-cow-1560941861-4960613.jpeg" alt="Uploaded animal photo preview">
-  </div>
-  <div class="breed-result" id="breedResult">
-      <h2>AI Suggestion</h2>
-      <p><strong>Detected Breed:</strong> <span id="ai-breed">—</span>
-        (<span id="ai-confidence">—</span>%)</p>
-      <img id="ai-image" src="" alt="Detected Breed" width="140">
-      <p class="small" id="ai-breed-desc">Upload a photo to get AI prediction.</p>
-      <label for="breed-confirm">Is this correct? Select breed:</label>
-      <select id="breed-confirm"></select>
-  </div>
+
+
   <form>
+    <h2>Owner Details</h2>
+    <label for="owner-name">Name:</label>
+    <input id="owner-name" type="text">
+    <label for="onwer-no">Mobile Number:</label>
+    <input id="onwer-no" type="number">
     <h2>Animal Details</h2>
-    <label for="animal-age">Age (years)</label>
+    <label for="animal-age">Age (in years)</label>
     <input id="animal-age" type="number" min="0" max="30">
-    <label for="animal-health">Health Status</label>
+    <label for="animal-health">Gender:</label>
     <select id="animal-health">
-      <option>Healthy</option>
-      <option>Under Treatment</option>
-      <option>Vaccinated</option>
+      <option>Male</option>
+      <option>Female</option>
     </select>
     <label for="location">Location</label>
     <input id="location" placeholder="Village/District/State">
-    <button type="submit">Register / Save</button>
+    <button type="submit">Register</button>
+    <div class="container">
+  <h1>Breed Identification</h1>
+  <div class="upload-box">
+  <label for="photo">Upload or capture animal photo:</label>
+  <input type="file" accept="image/*" capture="environment" id="photo" name="image">
+  <small>For best results, use a clear side-view photo. <a href="#">See samples</a>.</small>
+  <br>
+  <img id="animal-preview" style="display:none;" alt="Uploaded animal photo preview">
+</div>
+<div class="breed-result" id="breedResult">
+  <h2>AI Suggestion</h2>
+  <p><strong>Detected Breed:</strong> <span id="ai-breed">—</span>
+     (<span id="ai-confidence">—</span>%)</p>
+  <img id="ai-image" src="" alt="Detected Breed" width="140">
+  <p class="small" id="ai-breed-desc">Upload a photo to get AI prediction.</p>
+  <label for="breed-confirm">Is this correct? Select breed:</label>
+  <select id="breed-confirm"></select>
+</div>
   </form>
-  <hr>
-  <h2>Breed Library</h2>
-  <div class="library-card">
-    <strong>Gir</strong> <br>
-    Origin: Gujarat. Famous for milk, distinctive forehead.
-  </div>
-  <div class="library-card">
-    <strong>Murrah Buffalo</strong><br>
-    Origin: Haryana. Jet-black, top buffalo for milk.
-  </div>
-  <a href="#">View all breeds</a>
   <hr>
   <h2>Need Help?</h2>
   <a href="#">How to take best photo</a> |
