@@ -1,19 +1,25 @@
+# app.py
 import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from predict import predict_image
+from predict import predict_image, MODEL_PATH
 
 app = Flask(__name__, static_folder=".", static_url_path="")
 CORS(app)
 
 @app.route("/")
 def index():
-    # serve index.html from current folder
     return send_from_directory(".", "index.html")
 
 @app.route("/api/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"})
+
+@app.route("/api/check_model", methods=["GET"])
+def check_model():
+    exists = os.path.exists(MODEL_PATH)
+    size = os.path.getsize(MODEL_PATH) if exists else 0
+    return {"exists": exists, "size": size}
 
 @app.route("/api/predict", methods=["POST"])
 def predict():
@@ -47,4 +53,5 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
+    # For local testing
     app.run(host="0.0.0.0", port=8000, debug=True)

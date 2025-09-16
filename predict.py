@@ -1,12 +1,14 @@
 # predict.py
-import io, torch, numpy as np
+import io, os, torch, numpy as np
 from PIL import Image
 from torchvision import transforms, models
 
-MODEL_PATH = "model.pth"
+# Absolute path to model
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model.pth")  # change to "models/model.pth" if in subfolder
 
 _transform = transforms.Compose([
-    transforms.Resize((224,224)),
+    transforms.Resize((224, 224)),
     transforms.ToTensor(),
     transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225])
 ])
@@ -18,6 +20,9 @@ def load_model():
     global _model, _CLASSES
     if _model is not None:
         return _model, _CLASSES
+
+    if not os.path.exists(MODEL_PATH):
+        raise FileNotFoundError(f"Model not found at {MODEL_PATH}")
 
     ckpt = torch.load(MODEL_PATH, map_location="cpu")
     classes = ckpt["classes"]
