@@ -1,15 +1,15 @@
-# app.py
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
 from predict import predict_image
 
-app = Flask(_name_)
-CORS(app, resources={r"/api/": {"origins": ""}})  # widen/narrow as needed
+app = Flask(__name__, static_folder=".", static_url_path="")
+CORS(app)
 
-# Optional: file size limit (e.g., 10 MB)
-app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
+@app.route("/")
+def index():
+    # serve index.html from current folder
+    return send_from_directory(".", "index.html")
 
 @app.route("/api/health", methods=["GET"])
 def health():
@@ -24,27 +24,16 @@ def predict():
     if file.filename == "":
         return jsonify({"error": "Empty filename"}), 400
 
-    # Basic allowlist check
     allowed = {"jpg", "jpeg", "png", "webp"}
     ext = file.filename.rsplit(".", 1)[-1].lower() if "." in file.filename else ""
     if ext not in allowed:
         return jsonify({"error": f"Unsupported file type: {ext}"}), 415
 
-    # (Optional) store the upload temporarily (diagnostics)
-    # filename = secure_filename(file.filename)
-    # path = os.path.join("uploads", filename)
-    # os.makedirs("uploads", exist_ok=True)
-    # file.save(path)
-
-    # Read bytes for ML
     file_bytes = file.read()
-
     try:
         result = predict_image(file_bytes, topk=3)
-        # shape response to match your front-end
-        # Convert confidences to percentage integers if you like
         def pct(x): return int(round(x * 100))
-        payload = {
+        return jsonify({
             "top": {
                 "breed": result["top"]["breed"],
                 "confidence": pct(result["top"]["confidence"])
@@ -53,11 +42,9 @@ def predict():
                 {"breed": p["breed"], "confidence": pct(p["confidence"])}
                 for p in result["predictions"]
             ]
-        }
-        return jsonify(payload)
+        })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if _name_ == "_main_":
-    # $ python app.py
+if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
