@@ -11,7 +11,12 @@ const breedResult = document.getElementById('breedResult');
 // Show preview and send image to API
 photoInput.addEventListener('change', () => {
     const file = photoInput.files[0];
-    if (!file) return;
+    if (!file) {
+        // If no file chosen, hide everything
+        preview.style.display = 'none';
+        breedResult.style.display = 'none';
+        return;
+    }
 
     // Show uploaded image preview
     preview.src = URL.createObjectURL(file);

@@ -147,3 +147,6 @@ footer {
   color: #fff;
   font-size: 0.9rem;
 }
+.breed-result{
+  display: none;
+}
