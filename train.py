@@ -5,9 +5,13 @@ from tqdm import tqdm
 
 import torch
 import torch.nn as nn
+from torchvision import models
 import torch.optim as optim
 from torchvision import datasets, transforms, models
 from torch.utils.data import DataLoader
+
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
 
 def prepare_split(src_root, out_root="data", val_split=0.2, seed=42):
     """Split dataset into train/val if not already split"""
@@ -69,9 +73,15 @@ def train(args):
     classes = train_ds.classes
     print("Classes:", classes)
 
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
     model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
+    for param in model.parameters():
+        param.requires_grad = False
+
+
     model.fc = nn.Linear(model.fc.in_features, len(classes))
+
     model.to(device)
 
     criterion = nn.CrossEntropyLoss()
@@ -92,10 +102,40 @@ def train(args):
             running_loss += loss.item() * inputs.size(0)
             running_corrects += torch.sum(preds == labels.data).item()
         epoch_acc = running_corrects / len(train_ds)
-        print(f"Train Acc: {epoch_acc:.4f}")
+        epoch_loss = running_loss / len(train_ds)
+        print(f"Train Loss: {epoch_loss:.4f} | Train Acc: {epoch_acc:.4f}")
 
         model.eval()
         val_corrects = 0
+        all_preds = []
+        all_labels = []
+
+        with torch.no_grad():
+            for inputs, labels in val_loader:
+                inputs, labels = inputs.to(device), labels.to(device)
+                outputs = model(inputs)
+                _, preds = torch.max(outputs, 1)
+
+                val_corrects += torch.sum(preds == labels.data).item()
+                all_preds.extend(preds.cpu().numpy())
+                all_labels.extend(labels.cpu().numpy())
+
+        val_acc = val_corrects / len(val_ds)
+        print(f"Val Acc: {val_acc:.4f}")
+
+        # confusion matrix
+        cm = confusion_matrix(all_labels, all_preds)
+        print("Confusion Matrix:")
+        print(cm)
+
+        # save confusion matrix plot
+        plt.imshow(cm, cmap="Blues")
+        plt.title("Confusion Matrix")
+        plt.xlabel("Predicted")
+        plt.ylabel("Actual")
+        plt.colorbar()
+        plt.savefig("confusion_matrix.png")
+        plt.close()
         with torch.no_grad():
             for inputs, labels in val_loader:
                 inputs, labels = inputs.to(device), labels.to(device)
@@ -107,6 +147,7 @@ def train(args):
 
         if val_acc > best_acc:
             best_acc = val_acc
+            os.makedirs(os.path.dirname(args.save_path), exist_ok=True)
             torch.save({
                 "arch": "resnet18",
                 "state_dict": model.state_dict(),
@@ -121,6 +162,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--val_split", type=float, default=0.2)
-    parser.add_argument("--save_path", type=str, default="model.pth")
+    parser.add_argument("--save_path", type=str, default="models/model.pth")
     args = parser.parse_args()
     train(args)
+

@@ -5,7 +5,7 @@ from torchvision import transforms, models
 
 # Absolute path to model
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "model.pth")  # change to "models/model.pth" if in subfolder
+MODEL_PATH = os.path.join(BASE_DIR, "models/model.pth")  # change to "models/model.pth" if in subfolder
 
 _transform = transforms.Compose([
     transforms.Resize((224, 224)),
@@ -35,7 +35,10 @@ def load_model():
     return _model, _CLASSES
 
 def _read_image(file_bytes: bytes):
-    return Image.open(io.BytesIO(file_bytes)).convert("RGB")
+    try:
+        return Image.open(io.BytesIO(file_bytes)).convert("RGB")
+    except:
+        raise ValueError("Invalid image file")
 
 def _preprocess(img: Image.Image):
     return _transform(img).unsqueeze(0)
@@ -51,4 +54,6 @@ def predict_image(file_bytes: bytes, topk=3):
 
     idxs = np.argsort(probs)[::-1][:topk]
     preds = [{"breed": classes[i], "confidence": float(probs[i])} for i in idxs]
-    return {"predictions": preds, "top": preds[0]}
+    if preds[0]['confidence']<0.5:
+        return {"error":"Low confidence prediction"}
+    return {"predictions":preds,"top":preds[0]}
