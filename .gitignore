@@ -1,4 +1,3 @@
 *.pth
-data/
-models/
+dataset/
 __pycache__/
