@@ -26,8 +26,17 @@ def load_model():
 
     ckpt = torch.load(MODEL_PATH, map_location="cpu")
     classes = ckpt["classes"]
-    model = models.resnet18(weights=None)
-    model.fc = torch.nn.Linear(model.fc.in_features, len(classes))
+    arch = ckpt.get("arch", "resnet18")
+    
+    if arch == "resnet18":
+        model = models.resnet18(weights=None)
+        model.fc = torch.nn.Linear(model.fc.in_features, len(classes))
+    elif arch == "mobilenet_v3_large":
+        model = models.mobilenet_v3_large(weights=None)
+        model.classifier[3] = torch.nn.Linear(model.classifier[3].in_features, len(classes))
+    else:
+        raise ValueError(f"Unsupported checkpoint architecture: {arch}")
+        
     model.load_state_dict(ckpt["state_dict"])
     model.eval()
 

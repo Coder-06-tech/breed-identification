@@ -1,3 +1,14 @@
 *.pth
 dataset/
 __pycache__/
+.venv/
+config.json
+registrations.json
+confusion_matrix.png
+data/
+.ipynb_checkpoints/
+*.pyc
+*.pyo
+.DS_Store
+*.log
+data/

@@ -4,66 +4,741 @@
   <meta charset="UTF-8">
   <title>Bharat Pashudhan AI Breed Identifier</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<header>
-  <div><strong>🐮 Bharat Pashudhan</strong> - AI Breed Identifier</div>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Library</a>
-    <a href="#">Management</a>
-    <a href="#">Health</a>
-    <a href="#">Breeding</a>
-    <a href="#">Support</a>
+
+<header class="app-header">
+  <div class="header-logo">
+    <span class="logo-emoji">🐮</span>
+    <div class="logo-text">
+      <span class="logo-title">Bharat Pashudhan</span>
+      <span class="logo-subtitle">AI Portal</span>
+    </div>
+  </div>
+  <button type="button" class="menu-toggle" id="menuToggle">
+    <span class="material-icons-round">menu</span>
+  </button>
+  <nav class="nav-links" id="navLinks">
+    <a href="#" class="nav-btn active" data-section="home"><span class="material-icons-round">home</span> Home</a>
+    <a href="#" class="nav-btn" data-section="library"><span class="material-icons-round">menu_book</span> Library</a>
+    <a href="#" class="nav-btn" data-section="management"><span class="material-icons-round">grid_view</span> Management</a>
+    <a href="#" class="nav-btn" data-section="health"><span class="material-icons-round">favorite</span> Health</a>
+    <a href="#" class="nav-btn" data-section="breeding"><span class="material-icons-round">insights</span> Breeding</a>
+    <a href="#" class="nav-btn" data-section="support"><span class="material-icons-round">help_outline</span> Support</a>
   </nav>
 </header>
 
+<main class="main-content">
+  <!-- ================= SECTION: HOME ================= -->
+  <div id="section-home" class="spa-section active">
+    <div class="welcome-banner">
+      <div class="banner-text">
+        <h1>Cattle Registration & Breed Identification</h1>
+        <p>Identify cattle breeds instantly using advanced computer vision and register them on the national registry database.</p>
+      </div>
+      <div class="banner-badge">
+        <span class="material-icons-round">verified</span> Powered by ResNet18 AI
+      </div>
+    </div>
 
-  <form>
-    <h2>Owner Details</h2>
-    <label for="owner-name">Name:</label>
-    <input id="owner-name" type="text">
-    <label for="onwer-no">Mobile Number:</label>
-    <input id="onwer-no" type="number">
-    <h2>Animal Details</h2>
-    <label for="animal-age">Age (in years)</label>
-    <input id="animal-age" type="number" min="0" max="30">
-    <label for="animal-health">Gender:</label>
-    <select id="animal-health">
-      <option>Male</option>
-      <option>Female</option>
-    </select>
-    <label for="location">Location</label>
-    <input id="location" placeholder="Village/District/State">
-    <button type="submit">Register</button>
-    <div class="container">
-  <h1>Breed Identification</h1>
-  <div class="upload-box">
-  <label for="photo">Upload or capture animal photo:</label>
-  <input type="file" accept="image/*" capture="environment" id="photo" name="image">
-  <small>For best results, use a clear side-view photo. <a href="#">See samples</a>.</small>
-  <br>
-  <img id="animal-preview" style="display:none;" alt="Uploaded animal photo preview">
+    <form id="registrationForm" class="dashboard-grid">
+      <!-- Left Column: Owner and Animal Details -->
+      <div class="card registration-card">
+        <div class="card-header">
+          <span class="material-icons-round icon-green">person</span>
+          <h2>Owner Information</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="owner-name">Full Name</label>
+            <div class="input-wrapper">
+              <span class="material-icons-round input-icon">badge</span>
+              <input id="owner-name" type="text" placeholder="Enter owner's full name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="onwer-no">Mobile Number</label>
+            <div class="input-wrapper">
+              <span class="material-icons-round input-icon">phone</span>
+              <input id="onwer-no" type="number" placeholder="Enter 10-digit mobile number" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-header separator-header">
+          <span class="material-icons-round icon-green">pets</span>
+          <h2>Animal Attributes</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="animal-age">Age (years)</label>
+              <div class="input-wrapper">
+                <span class="material-icons-round input-icon">calendar_today</span>
+                <input id="animal-age" type="number" min="0" max="30" placeholder="e.g., 4" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="animal-health">Gender</label>
+              <div class="input-wrapper">
+                <span class="material-icons-round input-icon">transgender</span>
+                <select id="animal-health" required>
+                  <option value="Female">Female (Cow)</option>
+                  <option value="Male">Male (Bull)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="location">Location Details</label>
+            <div class="input-wrapper">
+              <span class="material-icons-round input-icon">place</span>
+              <input id="location" placeholder="Village / District / State" required>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-footer-action">
+          <button type="submit" class="btn-primary" id="btnRegister">
+            <span class="material-icons-round">app_registration</span> Register Animal
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Column: AI Breed Identification -->
+      <div class="card identification-card">
+        <div class="card-header">
+          <span class="material-icons-round icon-gold">psychology</span>
+          <h2>AI Breed Identification</h2>
+        </div>
+        
+        <div class="card-body">
+          <!-- Input Tabs for Prediction Methods -->
+          <div class="input-tabs">
+            <button type="button" class="tab-btn active" data-predict-tab="upload"><span class="material-icons-round">cloud_upload</span> Upload</button>
+            <button type="button" class="tab-btn" data-predict-tab="camera"><span class="material-icons-round">videocam</span> Camera</button>
+            <button type="button" class="tab-btn" data-predict-tab="url"><span class="material-icons-round">link</span> URL</button>
+          </div>
+
+          <!-- Method: Upload -->
+          <div class="predict-tab-content active" id="predict-tab-upload">
+            <div class="upload-area" id="uploadArea">
+              <input type="file" accept="image/*" capture="environment" id="photo" name="image" class="file-input">
+              <div class="upload-placeholder" id="uploadPlaceholder">
+                <span class="material-icons-round upload-icon">cloud_upload</span>
+                <h3>Drag & Drop photo here</h3>
+                <p>or click to browse from device</p>
+                <span class="upload-badge">Supports JPEG, PNG, WEBP</span>
+              </div>
+              <div class="preview-container" id="previewContainer" style="display: none;">
+                <img id="animal-preview" alt="Uploaded animal photo preview">
+                <div class="scan-bar" id="scanBar"></div>
+                <button type="button" class="btn-remove-photo" id="btnRemovePhoto">
+                  <span class="material-icons-round">close</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="upload-help">
+              <span class="material-icons-round info-icon">info</span>
+              <p>For best results, use a clear side-view photo of the cattle. <a href="#" id="btnShowGuidelines">See guidelines</a>.</p>
+            </div>
+          </div>
+
+          <!-- Method: Camera -->
+          <div class="predict-tab-content" id="predict-tab-camera" style="display: none;">
+            <div class="webcam-container" id="webcamContainer">
+              <video id="webcam" autoplay playsinline style="display: none;"></video>
+              <div class="webcam-placeholder" id="webcamPlaceholder">
+                <span class="material-icons-round camera-icon">photo_camera</span>
+                <h3>Direct Camera Capture</h3>
+                <p>Allow browser camera permission to capture live cattle photo immediately in-memory.</p>
+              </div>
+              <div class="scan-bar" id="webcamScanBar"></div>
+            </div>
+            
+            <div class="webcam-actions">
+              <button type="button" class="btn-primary" id="btnStartCamera">
+                <span class="material-icons-round">videocam</span> Start Camera Feed
+              </button>
+              <button type="button" class="btn-primary" id="btnCapturePhoto" style="display: none; background-color: var(--accent); color: var(--primary);">
+                <span class="material-icons-round">camera</span> Snap Photo
+              </button>
+              <button type="button" class="btn-secondary" id="btnStopCamera" style="display: none;">
+                <span class="material-icons-round">videocam_off</span> Stop Feed
+              </button>
+            </div>
+          </div>
+
+          <!-- Method: URL -->
+          <div class="predict-tab-content" id="predict-tab-url" style="display: none;">
+            <div class="url-input-block">
+              <div class="form-group">
+                <label for="image-url">Internet Image URL</label>
+                <div class="input-wrapper">
+                  <span class="material-icons-round input-icon">link</span>
+                  <input type="url" id="image-url" placeholder="https://example.com/images/cow.jpg">
+                </div>
+              </div>
+              <button type="button" class="btn-primary" id="btnAnalyzeUrl">
+                <span class="material-icons-round">network_check</span> Analyze URL Image
+              </button>
+            </div>
+          </div>
+
+          <!-- AI Prediction Loading State -->
+          <div class="ai-loading" id="aiLoading" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Analyzing cattle features...</p>
+          </div>
+
+          <!-- AI Suggestion Result Dashboard -->
+          <div class="breed-result" id="breedResult">
+            <div class="result-header">
+              <div class="detected-badge" id="detectedBadge">Top AI Prediction</div>
+              <div class="result-main">
+                <h3 id="ai-breed">Gir</h3>
+                <div class="confidence-badge"><span id="ai-confidence">96</span>% Confidence</div>
+              </div>
+            </div>
+            
+            <div class="result-breakdown">
+              <h4>Detailed Breed Breakdown</h4>
+              <div class="breakdown-list" id="predictionsList">
+                <!-- Dynamically populated predictions -->
+              </div>
+            </div>
+
+            <!-- Wikipedia Rich Details Block -->
+            <div class="wiki-detail-block" id="wikiDetailBlock" style="display: none;">
+              <div class="wiki-header">
+                <span class="material-icons-round text-green">auto_stories</span>
+                <h4>Breed Encyclopedia Fact Sheet</h4>
+              </div>
+              <div class="wiki-content">
+                <img id="wiki-image" src="" alt="Breed Reference Photo" style="display: none;">
+                <p id="wiki-text">Loading encyclopedic details...</p>
+              </div>
+              <div class="wiki-footer">
+                <a href="#" id="wiki-link" target="_blank" class="wiki-btn-link">
+                  Read Full Wikipedia Article <span class="material-icons-round">open_in_new</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="verification-box">
+              <label for="breed-confirm">
+                <span class="material-icons-round">check_circle_outline</span> Verify and Confirm Breed:
+              </label>
+              <div class="select-wrapper">
+                <select id="breed-confirm" required></select>
+              </div>
+              <p class="small-info">Please select the correct breed to save with the registration.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- ================= SECTION: LIBRARY ================= -->
+  <div id="section-library" class="spa-section">
+    <div class="welcome-banner">
+      <div class="banner-text">
+        <h1>Cattle Breed Encyclopedia</h1>
+        <p>Explore detailed anatomical, regional, and production facts for 90+ cattle breeds supported by our ResNet18 model.</p>
+      </div>
+    </div>
+    
+    <div class="card library-search-card">
+      <div class="card-body">
+        <div class="search-bar-row">
+          <div class="input-wrapper flex-grow-1">
+            <span class="material-icons-round input-icon">search</span>
+            <input type="text" id="librarySearch" placeholder="Search breeds by name (e.g. Jersey, Gir, Angus)...">
+          </div>
+          <button type="button" class="btn-primary btn-search-go" id="btnLibraryClear" style="width: auto;">
+            Clear Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="library-grid-container">
+      <div class="library-left-panel">
+        <div class="card library-list-card">
+          <div class="card-header">
+            <span class="material-icons-round icon-green">list</span>
+            <h2>Select Breed</h2>
+          </div>
+          <div class="breed-list-ul" id="breedListUl">
+            <!-- Dynamically populated list of 90 breeds -->
+          </div>
+        </div>
+      </div>
+
+      <div class="library-right-panel">
+        <div class="card library-details-card" id="libraryDetailsCard">
+          <!-- Dynamically populated details on selected breed -->
+          <div class="card-body center-placeholder" id="libraryDetailsPlaceholder">
+            <span class="material-icons-round big-placeholder-icon">menu_book</span>
+            <h3>Select a breed from the list to view facts</h3>
+            <p>Encyclopedic details, origins, and characteristics will be fetched dynamically via Wikipedia REST APIs.</p>
+          </div>
+          <div class="card-body library-details-content" id="libraryDetailsContent" style="display: none;">
+            <div class="details-title-row">
+              <h2 id="lib-breed-title">Gir Cattle</h2>
+              <span class="wiki-tag">Wikipedia Verified</span>
+            </div>
+            
+            <div class="details-body-grid">
+              <div class="details-image-container">
+                <img id="lib-breed-img" src="" alt="Breed Photo">
+              </div>
+              <div class="details-text-container">
+                <h3>Characteristics & Summary</h3>
+                <p id="lib-breed-desc">Loading...</p>
+                <div class="details-metadata">
+                  <div class="meta-item">
+                    <span class="material-icons-round text-gold">category</span>
+                    <div>
+                      <strong>Subspecies:</strong>
+                      <span id="lib-breed-type">Bos taurus indicus (Zebu)</span>
+                    </div>
+                  </div>
+                </div>
+                <a href="#" id="lib-breed-wiki" target="_blank" class="btn-primary wiki-link-btn" style="width: fit-content; margin-top: 1rem;">
+                  Open Wikipedia Page <span class="material-icons-round">open_in_new</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SECTION: MANAGEMENT ================= -->
+  <div id="section-management" class="spa-section">
+    <div class="welcome-banner">
+      <div class="banner-text">
+        <h1>Livestock Registry Database</h1>
+        <p>Manage, audit, and inspect all registered cattle profiles saved in this terminal registry.</p>
+      </div>
+    </div>
+
+    <div class="card registry-card">
+      <div class="card-header font-between">
+        <div class="display-flex align-center gap-05">
+          <span class="material-icons-round icon-green">dns</span>
+          <h2>Active Cattle Registry</h2>
+        </div>
+        <span class="badge-total" id="registryCountBadge">0 Registered</span>
+      </div>
+      <div class="card-body overflow-x">
+        <table class="registry-table" id="registryTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Owner Details</th>
+              <th>Age/Gender</th>
+              <th>Location</th>
+              <th>Verified Breed</th>
+              <th>Registration Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="registryTableBody">
+            <!-- Loaded dynamically from LocalStorage -->
+            <tr>
+              <td colspan="7" class="empty-table-msg">No cattle registered yet. Go to the Home tab to add a record.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SECTION: HEALTH ================= -->
+  <div id="section-health" class="spa-section">
+    <div class="welcome-banner">
+      <div class="banner-text">
+        <h1>AI Health Assistant & Diagnostics</h1>
+        <p>Evaluate cow health indicators, check standard veterinary parameters, and diagnose potential ailments.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Left Card: Diagnosis Checklist -->
+      <div class="card diagnostic-card">
+        <div class="card-header">
+          <span class="material-icons-round icon-green">health_and_safety</span>
+          <h2>Health Symptom Checklist</h2>
+        </div>
+        <div class="card-body">
+          <p class="description-small">Select all observable symptoms to generate an AI wellness recommendation:</p>
+          <div class="checklist-grid">
+            <label class="check-item">
+              <input type="checkbox" class="symptom-check" value="fever">
+              <span class="check-box-custom"></span>
+              <div class="check-text">
+                <strong>High Fever / Temperature</strong>
+                <p>Hot nose, dry ears, elevated body temperature.</p>
+              </div>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" class="symptom-check" value="milk_drop">
+              <span class="check-box-custom"></span>
+              <div class="check-text">
+                <strong>Sudden Milk Drop</strong>
+                <p>Sudden decrease in daily milk yield.</p>
+              </div>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" class="symptom-check" value="lameness">
+              <span class="check-box-custom"></span>
+              <div class="check-text">
+                <strong>Lameness / Limping</strong>
+                <p>Difficulty standing, foot lesions, limping walking gait.</p>
+              </div>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" class="symptom-check" value="drooling">
+              <span class="check-box-custom"></span>
+              <div class="check-text">
+                <strong>Excessive Drooling</strong>
+                <p>Foamy salivation or blisters around mouth.</p>
+              </div>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" class="symptom-check" value="swelling">
+              <span class="check-box-custom"></span>
+              <div class="check-text">
+                <strong>Udder Swelling / Mastitis</strong>
+                <p>Hot, red, painful udder quadrants, watery milk.</p>
+              </div>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" class="symptom-check" value="bloated">
+              <span class="check-box-custom"></span>
+              <div class="check-text">
+                <strong>Left Flank Swelling / Bloating</strong>
+                <p>Tight distended rumen on left belly, rapid breathing.</p>
+              </div>
+            </label>
+          </div>
+          
+          <button type="button" class="btn-primary" id="btnDiagnose" style="margin-top: 1.5rem;">
+            <span class="material-icons-round">medical_services</span> Diagnose Symptoms
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Card: Diagnostics Outcome -->
+      <div class="card diagnostic-result-card">
+        <div class="card-header">
+          <span class="material-icons-round icon-gold">analytics</span>
+          <h2>Diagnosis Result</h2>
+        </div>
+        <div class="card-body" id="diagnosticPlaceholder">
+          <div class="center-placeholder">
+            <span class="material-icons-round big-placeholder-icon">query_stats</span>
+            <h3>No symptoms diagnosed</h3>
+            <p>Check the symptoms on the left card and click "Diagnose Symptoms" to calculate risk analysis.</p>
+          </div>
+        </div>
+        <div class="card-body" id="diagnosticContent" style="display: none;">
+          <div class="alert-status-card" id="diagStatusCard">
+            <div class="status-icon" id="diagStatusIcon">
+              <span class="material-icons-round">check_circle</span>
+            </div>
+            <div>
+              <h3 id="diagStatusTitle">Healthy Status</h3>
+              <p id="diagStatusDesc">No major critical symptoms selected.</p>
+            </div>
+          </div>
+          
+          <div class="advice-block" style="margin-top: 1.5rem;">
+            <h3>Veterinary Recommendation</h3>
+            <p id="diagAdviceText">Please maintain standard nutritional protocols, clean drinking water, and dry bedding environment.</p>
+          </div>
+
+          <div class="critical-warning" id="diagWarningBox" style="display: none;">
+            <span class="material-icons-round">warning</span>
+            <div>
+              <strong>Emergency advisory notice:</strong>
+              <p id="diagWarningText">Contact local block veterinary officer immediately.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SECTION: BREEDING ================= -->
+  <div id="section-breeding" class="spa-section">
+    <div class="welcome-banner">
+      <div class="banner-text">
+        <h1>Breeding & Gestation Calculator</h1>
+        <p>Enter mating or Artificial Insemination (AI) dates to plot expected calving delivery cycles.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Left Card: Breeding Insemination Date Entry -->
+      <div class="card breeding-form-card">
+        <div class="card-header">
+          <span class="material-icons-round icon-green">science</span>
+          <h2>Insemination Inputs</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="breeding-date">Insemination / Mating Date</label>
+            <div class="input-wrapper">
+              <span class="material-icons-round input-icon">date_range</span>
+              <input type="date" id="breeding-date" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="breeding-method">Breeding Method</label>
+            <div class="input-wrapper">
+              <span class="material-icons-round input-icon">settings</span>
+              <select id="breeding-method">
+                <option value="AI">Artificial Insemination (AI)</option>
+                <option value="Natural">Natural Breeding (Bull)</option>
+              </select>
+            </div>
+          </div>
+          
+          <button type="button" class="btn-primary" id="btnCalculateBreeding">
+            <span class="material-icons-round">calculate</span> Calculate Expected Calving
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Card: Gestation Timeline Tracker -->
+      <div class="card breeding-timeline-card">
+        <div class="card-header">
+          <span class="material-icons-round icon-gold">timeline</span>
+          <h2>Calving Cycle Timeline</h2>
+        </div>
+        <div class="card-body" id="breedingPlaceholder">
+          <div class="center-placeholder">
+            <span class="material-icons-round big-placeholder-icon">pending_actions</span>
+            <h3>No cycle calculated</h3>
+            <p>Input mating date and calculate to render gestation timeline milestones.</p>
+          </div>
+        </div>
+        
+        <div class="card-body" id="breedingContent" style="display: none;">
+          <div class="calving-summary-banner">
+            <div>
+              <p>Expected Calving Date</p>
+              <h2 id="expectedCalvingDate">25 May 2026</h2>
+            </div>
+            <div class="calving-days-badge" id="daysRemainingBadge">184 Days Left</div>
+          </div>
+          
+          <div class="gestation-progress-block">
+            <div class="display-flex justify-between font-size-085 font-weight-600 margin-bottom-04">
+              <span>Gestation Timeline Progress</span>
+              <span id="gestationPercent">60%</span>
+            </div>
+            <div class="progress-track" style="height: 12px;">
+              <div class="progress-bar" id="gestationProgressBar" style="width: 60%"></div>
+            </div>
+          </div>
+
+          <div class="timeline-vertical">
+            <div class="timeline-node passed">
+              <div class="node-icon"><span class="material-icons-round">done</span></div>
+              <div class="node-content">
+                <h4>Day 1: Conception Mating Date</h4>
+                <p id="timeline-mating-date">Mated on 15 Aug 2025</p>
+              </div>
+            </div>
+            <div class="timeline-node" id="node-pd">
+              <div class="node-icon"><span>2</span></div>
+              <div class="node-content">
+                <h4>Day 60: Pregnancy Diagnosis (PD)</h4>
+                <p id="timeline-pd-date">Expected 14 Oct 2025</p>
+              </div>
+            </div>
+            <div class="timeline-node" id="node-dry">
+              <div class="node-icon"><span>3</span></div>
+              <div class="node-content">
+                <h4>Day 220: Dry-Off Date</h4>
+                <p id="timeline-dry-date">Expected 23 Mar 2026</p>
+              </div>
+            </div>
+            <div class="timeline-node" id="node-calve">
+              <div class="node-icon"><span class="material-icons-round">child_care</span></div>
+              <div class="node-content">
+                <h4>Day 283: Calving Expected</h4>
+                <p id="timeline-calving-date">Expected 25 May 2026</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SECTION: SUPPORT ================= -->
+  <div id="section-support" class="spa-section">
+    <div class="welcome-banner">
+      <div class="banner-text">
+        <h1>Support Center & FAQs</h1>
+        <p>Get instant answers regarding the ResNet18 model, photo requirements, and system usage guidelines.</p>
+      </div>
+    </div>
+
+    <div class="card support-card">
+      <div class="card-header">
+        <span class="material-icons-round icon-green">quiz</span>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      
+      <div class="card-body support-accordion-container">
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>How does the AI Breed Identification work?</span>
+            <span class="material-icons-round accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <p>Our app processes the image through a ResNet18 deep convolutional neural network. The model extracts structural features from the image (like muzzle curves, coloration patterns, and hump shapes) and computes probability scores for 90 different classes, selecting the highest probability as the breed suggestion.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>What should I do if the AI returns "Low Confidence"?</span>
+            <span class="material-icons-round accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <p>A "Low Confidence" warning indicates that the model's highest class probability is under 50%. This can happen due to bad lighting, blurry shots, front-only views, or non-cattle objects. We recommend consulting our **Photo Guidelines** and uploading a clear, side-view photo, or choosing the breed manually in the confirmation dropdown.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>Can I register buffaloes, bulls, and heifers?</span>
+            <span class="material-icons-round accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <p>Yes. The portal supports registration of both male (bulls) and female (cows) cattle, as well as distinct breeds of buffalo (like the Murrah Buffalo class). Select the appropriate Gender/Sex and confirmed breed on the inputs block.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>How do I download images of new breeds to retrain my model?</span>
+            <span class="material-icons-round accordion-icon">expand_more</span>
+          </button>
+          <div class="accordion-content">
+            <p>You can run our built-in command-line image scraper script `scrape_images.py` from the shell workspace:
+               <br><code>python scrape_images.py --breed "Jersey cow" --limit 50</code>
+               <br>This automatically scrapes and downloads 50 clear images of the specified breed to your `dataset/` folders, ready for pipeline training.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Modal: Guidelines & Samples -->
+<div class="modal" id="guidelinesModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>📸 Photo Guidelines for Accurate Breed ID</h2>
+      <button type="button" class="btn-close-modal" id="btnCloseGuidelines">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Our deep learning ResNet18 model yields the highest accuracy when the animal is photographed using the following parameters:</p>
+      
+      <div class="guideline-comparison">
+        <div class="guide-box good">
+          <div class="guide-header"><span class="material-icons-round">check_circle</span> Correct Shot</div>
+          <div class="guide-photo-placeholder side-view"></div>
+          <ul>
+            <li>Cattle standing side-view</li>
+            <li>Well lit environment</li>
+            <li>No obstruction/other animals</li>
+          </ul>
+        </div>
+        <div class="guide-box bad">
+          <div class="guide-header"><span class="material-icons-round">cancel</span> Incorrect Shot</div>
+          <div class="guide-photo-placeholder bad-view"></div>
+          <ul>
+            <li>Cattle face only or rear-view</li>
+            <li>Blurry, dark, or low contrast</li>
+            <li>Too far away or crowded group</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="guidelines-footer">
+        <button type="button" class="btn-secondary" id="btnAcceptGuidelines">Got it, thanks</button>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="breed-result" id="breedResult">
-  <h2>AI Suggestion</h2>
-  <p><strong>Detected Breed:</strong> <span id="ai-breed">—</span>
-     (<span id="ai-confidence">—</span>%)</p>
-  <img id="ai-image" src="" alt="Detected Breed" width="140">
-  <p class="small" id="ai-breed-desc">Upload a photo to get AI prediction.</p>
-  <label for="breed-confirm">Is this correct? Select breed:</label>
-  <select id="breed-confirm"></select>
+
+<!-- Modal: Success Notification -->
+<div class="modal" id="successModal">
+  <div class="modal-content success-content">
+    <div class="modal-body success-body">
+      <div class="success-icon-container">
+        <span class="material-icons-round">verified_user</span>
+      </div>
+      <h2>Registration Successful!</h2>
+      <p>The animal has been registered in the system database.</p>
+      
+      <div class="receipt-card">
+        <h3>Registration Receipt</h3>
+        <div class="receipt-row">
+          <span>Registration ID:</span>
+          <strong id="receipt-reg-id">BP-847293-2026</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Owner:</span>
+          <span id="receipt-owner">—</span>
+        </div>
+        <div class="receipt-row">
+          <span>Mobile Number:</span>
+          <span id="receipt-phone">—</span>
+        </div>
+        <div class="receipt-row">
+          <span>Age / Gender:</span>
+          <span id="receipt-animal">—</span>
+        </div>
+        <div class="receipt-row">
+          <span>Location:</span>
+          <span id="receipt-loc">—</span>
+        </div>
+        <div class="receipt-row">
+          <span>Confirmed Breed:</span>
+          <strong id="receipt-breed">—</strong>
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary" id="btnSuccessClose">Done</button>
+    </div>
+  </div>
 </div>
-  </form>
-  <hr>
-  <h2>Need Help?</h2>
-  <a href="#">How to take best photo</a> |
-  <a href="#">FAQ</a>
-</div>
-<footer>
-  &copy; 2025 Bharat Pashudhan | info@bpa.gov.in | Powered by GovTech
+
+<footer class="app-footer">
+  &copy; 2026 Bharat Pashudhan | info@bpa.gov.in | Powered by GovTech
 </footer>
-<script src="index.js"></script>
+
+<script type="module" src="index.js"></script>
 </body>
 </html>
